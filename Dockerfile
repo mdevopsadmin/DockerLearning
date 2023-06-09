@@ -31,11 +31,11 @@ ENV PATH="${PATH};C:\build\maven\bin"
 # Build the Maven project
 RUN mvn package
 
+# Set SaonrQube host URL as an environment variable
+ENV SONAR_HOST_URL="http://10.0.216.133:9003"
+
 # Analyze the project with SonarQube
-RUN mvn sonar:sonar ^
-    -Dsonar.host.url="10.0.216.133:9003" ^
-    -Dsonar.projectKey="DockerBuild" ^
-    -Dsonar.login="97df365415abb7c63a5038a2cbe49bd00ed0335d"
+RUN mvn sonar:sonar -Dsonar.projectKey="DockerBuild" -Dsonar.login="97df365415abb7c63a5038a2cbe49bd00ed0335d"
 
 # Use a base image with Tomcat for Windows
 FROM mcr.microsoft.com/windows/nanoserver:ltsc2019 AS final
