@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y git
 RUN git clone https://github.com/mdevopsadmin/Bookstore_1.git .
 
 # Switch to a specific branch, tag, or commit if needed
-# RUN git checkout main
+# RUN git checkout master
 
 # Build the Maven project
 RUN mvn clean package
