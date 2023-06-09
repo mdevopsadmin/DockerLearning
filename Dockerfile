@@ -8,19 +8,19 @@ WORKDIR /build
 RUN apt-get update && apt-get install -y git
 
 # Clone the Git repository
-RUN git clone <repository_url> .
+RUN git clone https://github.com/mdevopsadmin/Bookstore_1.git .
 
 # Switch to a specific branch, tag, or commit if needed
-# RUN git checkout <branch_or_tag_or_commit>
+# RUN git checkout main
 
 # Build the Maven project
-RUN mvn package
+RUN mvn clean package
 
 # Analyze the project with SonarQube
 RUN mvn sonar:sonar \
-    -Dsonar.host.url=http://sonarqube:9000 \
-    -Dsonar.projectKey=your-project-key \
-    -Dsonar.login=your-sonar-token
+    -Dsonar.host.url=http://10.0.216.133:9003 \
+    -Dsonar.projectKey=DockerBuild \
+    -Dsonar.login=97df365415abb7c63a5038a2cbe49bd00ed0335d
 
 # Use a base image with Tomcat
 FROM tomcat:latest
@@ -35,7 +35,7 @@ RUN rm -rf /usr/local/tomcat/webapps/*
 COPY --from=build /build/target/your-project.war .
 
 # Expose the default Tomcat port
-EXPOSE 8080
+EXPOSE 8085
 
 # Start Tomcat when the container launches
 CMD ["catalina.sh", "run"
